@@ -16,6 +16,7 @@ function App() {
         <>
             <Canvas
                 canvas={canvas}
+                canvasCursorPos={canvasCursorPos}
                 canvasPreview={previewCanvas}
                 setCanvas={setCanvas}
                 setCanvasCursorPos={setCanvasCursorPos}/>

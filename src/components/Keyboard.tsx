@@ -28,7 +28,6 @@ type KeyboardProps = {
 const Keyboard = ({canvas, setCanvas, canvasCursorPos, setCanvasCursorPos}: KeyboardProps) => {
 
     const onEmojiClick = (event: MouseEvent) => {
-        debugger;
         let emoji = (event.target as HTMLTextAreaElement).innerText
         let newText = canvas.slice(0, canvasCursorPos) + emoji + canvas.slice(canvasCursorPos, canvas.length);
         setCanvas(newText);

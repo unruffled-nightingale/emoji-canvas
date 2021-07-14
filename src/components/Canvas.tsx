@@ -1,9 +1,11 @@
-import React, { MouseEvent } from 'react';
+import React, { useEffect, useRef} from 'react';
 import styled from 'styled-components'
+import AceEditor from "react-ace";
 
 
 type CanvasProps = {
     canvas: string
+    canvasCursorPos: number
     canvasPreview?: string,
     setCanvas: (x: string) => void
     setCanvasCursorPos: (x: number) => void
@@ -27,23 +29,49 @@ const TextArea = styled.textarea<TextAreaProps>`
 `;
 
 
-const Canvas = ({canvas, setCanvas, setCanvasCursorPos, canvasPreview}: CanvasProps) => {
+const Canvas = ({canvas, canvasCursorPos, setCanvas, setCanvasCursorPos, canvasPreview}: CanvasProps) => {
 
-    const onCanvasChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const editorRef = useRef<any>(null);
+
+    useEffect(() => {
+        debugger;
+        editorRef.current.editor.moveCursorTo(3, 3)
+    }, [canvasCursorPos])
+
+    const onCanvasChange = (value: string, event: any) => {
+        let anchor = event.end();
+        let position = (anchor['row']*200) + anchor['column'] + anchor['row']
         setCanvas(event.target.value);
-        setCanvasCursorPos(event.target.selectionEnd)
+        setCanvasCursorPos(position)
     };
 
-    const onCanvasClick = (event: MouseEvent<HTMLTextAreaElement>) => {
-        console.log((event.target as HTMLTextAreaElement).selectionStart);
-        setCanvasCursorPos((event.target as HTMLTextAreaElement).selectionEnd);
+    const onCanvasClick = (event: any) => {
+        let anchor = event.getAnchor();
+        let position = (anchor['row']*200) + anchor['column'] + anchor['row'] 
+        setCanvasCursorPos(position);
     };
 
     return (
-        <TextArea cols={500} rows={200}
-                  value={canvasPreview ? canvasPreview : canvas}
-                  onChange={onCanvasChange}
-                  onClick={onCanvasClick}/>
+        <AceEditor
+            ref={editorRef}
+            theme="textmate"
+            name="canvas"
+            height="100vh"
+            width="100vw"
+            fontSize={14}
+            onChange={onCanvasChange}
+            onCursorChange={onCanvasClick}
+            showPrintMargin={false}
+            showGutter={false}
+            highlightActiveLine={false}
+            value={canvas}
+            setOptions={{
+                enableBasicAutocompletion: false,
+                enableLiveAutocompletion: false,
+                enableSnippets: false,
+                showLineNumbers: false,
+                tabSize: 10000,
+            }}/>
     );
 }
 
