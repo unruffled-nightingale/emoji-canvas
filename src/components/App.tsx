@@ -2,7 +2,7 @@ import {useState} from "react";
 import NavBar from "./NavBar/NavBar";
 import Canvas from "./Canvas/Canvas";
 
-const BLANK_CANVAS: string = (" ".repeat(200) + "\n").repeat(100);
+const BLANK_CANVAS: string = (" ".repeat(2000) + "\n").repeat(100);
 const BLANK_CANVAS_NAME: string = "";
 
 function App() {

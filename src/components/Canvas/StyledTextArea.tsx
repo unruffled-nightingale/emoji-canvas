@@ -9,7 +9,7 @@ type StyledTextAreaProps = {
 }
 
 export const StyledTextArea = styled.textarea<StyledTextAreaProps>`
-    font-family: "Courier New", sans-serif;
+    font-family: "Helvetica Neue", sans-serif;
     font-size: 14px;
     line-height: 15px;
     border:none;
