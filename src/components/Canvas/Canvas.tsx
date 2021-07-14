@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import styled from 'styled-components'
+import { StyledTextArea } from './StyledTextArea';
 
 
 type CanvasProps = {
@@ -8,24 +8,6 @@ type CanvasProps = {
     setCanvas: (x: string) => void
     setCanvasCursorPos: (x: number) => void
 }
-
-type TextAreaProps = {
-    cols: number | undefined
-    rows: number | undefined
-    value: string
-    onChange: (x: React.ChangeEvent<HTMLTextAreaElement>) => void,
-    onClick: (x: React.MouseEvent<HTMLTextAreaElement>) => void
-}
-
-const TextArea = styled.textarea<TextAreaProps>`
-    font-family: "Courier New", sans-serif;
-    font-size: 14px;
-    line-height: 15px;
-    border:none;
-    cursor: text;
-    &:focus {outline: none};
-`;
-
 
 const Canvas = ({canvas, setCanvas, setCanvasCursorPos, canvasPreview}: CanvasProps) => {
 
@@ -40,7 +22,7 @@ const Canvas = ({canvas, setCanvas, setCanvasCursorPos, canvasPreview}: CanvasPr
     };
 
     return (
-        <TextArea cols={500} rows={200}
+        <StyledTextArea cols={500} rows={200}
                   value={canvasPreview ? canvasPreview : canvas}
                   onChange={onCanvasChange}
                   onClick={onCanvasClick}/>

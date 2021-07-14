@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const NavBarContainer = styled.div`
+export const StyledNavBarContainer = styled.div`
     position: fixed;
     top: 0;
     right: 0;
@@ -11,5 +11,3 @@ const NavBarContainer = styled.div`
     opacity: 90%;
     margin: 15px;
 `
-
-export default NavBarContainer; 

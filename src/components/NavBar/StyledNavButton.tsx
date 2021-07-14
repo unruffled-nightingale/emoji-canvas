@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import Icon from '@material-ui/core/Icon';
 
-type NavButtonProps = {
+type StyledNavButtonProps = {
     selected: boolean;
 }
 
-const NavButton = styled(Icon)<NavButtonProps>`
+export const StyledNavButton = styled(Icon)<StyledNavButtonProps>`
     && {
         float: right;
         font-size: 20px;
@@ -13,5 +13,3 @@ const NavButton = styled(Icon)<NavButtonProps>`
         color: ${props => props.selected ? "black" : "lightgrey"}
     }
 `
-
-export default NavButton;
