@@ -34,20 +34,43 @@ const Canvas = ({canvas, canvasCursorPos, setCanvas, setCanvasCursorPos, canvasP
     const editorRef = useRef<any>(null);
 
     useEffect(() => {
-        debugger;
-        editorRef.current.editor.moveCursorTo(3, 3)
+        let rowAndColPosition = cursorPositionToRowAndColPosition(canvasCursorPos)
+        console.log(rowAndColPosition)
+        let row: number = rowAndColPosition['row']
+        let col: number = rowAndColPosition['col']
+        editorRef.current.editor.moveCursorTo(row, col)
     }, [canvasCursorPos])
+
+    useEffect(() => {
+        debugger;
+        let rowAndColumnPosition = editorRef.current.editor.getCursorPosition()
+        let row: number = rowAndColumnPosition['row']
+        let col: number = rowAndColumnPosition['col'] + 2
+        editorRef.current.editor.moveCursorTo(row, col)
+    }, [canvas])
+
+    const cursorPositionToRowAndColPosition = (cursorPosition: number): any => {
+        let row = Math.floor(cursorPosition / 201)
+        let col = cursorPosition % 201
+        return {row: row, col: col}
+    }
+
+    const rowAndColPositionToCursorPosition = (row: number, col: number): number => {
+        return row * 201 + col
+    }
 
     const onCanvasChange = (value: string, event: any) => {
         let anchor = event.end();
-        let position = (anchor['row']*200) + anchor['column'] + anchor['row']
+        let position = (anchor['row']*201) + anchor['column']
+        console.log(position)
         setCanvas(event.target.value);
         setCanvasCursorPos(position)
     };
 
     const onCanvasClick = (event: any) => {
         let anchor = event.getAnchor();
-        let position = (anchor['row']*200) + anchor['column'] + anchor['row'] 
+        console.log(anchor)
+        let position = (anchor['row']*201) + anchor['column']
         setCanvasCursorPos(position);
     };
 
