@@ -1,7 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { StyledTextArea } from './StyledTextArea';
 
-
 type CanvasProps = {
     canvas: string
     canvasPreview?: string,
@@ -17,7 +16,6 @@ const Canvas = ({canvas, setCanvas, setCanvasCursorPos, canvasPreview}: CanvasPr
     };
 
     const onCanvasClick = (event: MouseEvent<HTMLTextAreaElement>) => {
-        console.log((event.target as HTMLTextAreaElement).selectionStart);
         setCanvasCursorPos((event.target as HTMLTextAreaElement).selectionEnd);
     };
 
