@@ -1,17 +1,6 @@
-import styled from 'styled-components'
-import IconSmall from './IconSmall'
-
-const FileComponent = styled.div`
-    padding-top: 5px;
-`;
-
-const FileName = styled.span`
-    font-family: "Arial", sans-serif;
-    font-size: 13px;
-    color: grey;
-    cursor: pointer;
-    &:hover { color: black }
-`;
+import IconSmall from '../SharedStyledComponents/IconSmall'
+import {StyledFileContainer} from './StyledFileContainer'
+import {StyledFileName} from './StyledFileName'
 
 type FileProps = {
     name: string
@@ -32,10 +21,10 @@ const File = ({name, onFileClick, onFileMouseOver, onFileMouseOut, onDeleteFileC
     const onMouseOut = () => onFileMouseOut()
 
     return (
-        <FileComponent>
-            <FileName onMouseDown={onSelect} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>{name}</FileName>
+        <StyledFileContainer>
+            <StyledFileName onMouseDown={onSelect} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>{name}</StyledFileName>
             <IconSmall onMouseDown={onDelete}>close</IconSmall>
-        </FileComponent>
+        </StyledFileContainer>
     );
 }
 

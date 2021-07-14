@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import NavBarContainer from "./NavBarContainer";
-import Save from "./Save";
-import Folder from "./Folder";
-import NavButtons from "./NavButtons";
-import NavButton from "./NavButton";
-import NavContent from "./NavContent";
-import Keyboard from "./Keyboard";
+import Save from "../Save/Save";
+import Folder from "../Folder/Folder";
+import Keyboard from "../Keyboard/Keyboard";
+import {StyledNavButtons} from "./StyledNavButtons";
+import {StyledNavButton} from "./StyledNavButton";
+import {StyledNavContent} from "./StyledNavContent";
+import {StyledNavBarContainer} from "./StyledNavBarContainer";
 
 type NavBarProps = {
     canvas: string
@@ -39,14 +39,14 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, 
     }
 
     return (
-        <NavBarContainer>
-            <NavButtons>
-                <NavButton id={NAV_BAR_VIEWS.KEYBOARD} selected={navBarView === NAV_BAR_VIEWS.KEYBOARD} onMouseDown={onNavButtonClick}>keyboard</NavButton>
-                <NavButton id={NAV_BAR_VIEWS.OPEN} selected={navBarView === NAV_BAR_VIEWS.OPEN} onClick={onNavButtonClick}>folder</NavButton>
-                <NavButton id={NAV_BAR_VIEWS.SAVE} selected={navBarView === NAV_BAR_VIEWS.SAVE} onClick={onNavButtonClick}>save</NavButton>
-                <NavButton id={NAV_BAR_VIEWS.GALLERY} selected={navBarView === NAV_BAR_VIEWS.GALLERY} onClick={onNavButtonClick}>photo_library</NavButton>
-            </NavButtons>
-            <NavContent>
+        <StyledNavBarContainer>
+            <StyledNavButtons>
+                <StyledNavButton id={NAV_BAR_VIEWS.KEYBOARD} selected={navBarView === NAV_BAR_VIEWS.KEYBOARD} onMouseDown={onNavButtonClick}>keyboard</StyledNavButton>
+                <StyledNavButton id={NAV_BAR_VIEWS.OPEN} selected={navBarView === NAV_BAR_VIEWS.OPEN} onClick={onNavButtonClick}>folder</StyledNavButton>
+                <StyledNavButton id={NAV_BAR_VIEWS.SAVE} selected={navBarView === NAV_BAR_VIEWS.SAVE} onClick={onNavButtonClick}>save</StyledNavButton>
+                <StyledNavButton id={NAV_BAR_VIEWS.GALLERY} selected={navBarView === NAV_BAR_VIEWS.GALLERY} onClick={onNavButtonClick}>photo_library</StyledNavButton>
+            </StyledNavButtons>
+            <StyledNavContent>
                 {navBarView === NAV_BAR_VIEWS.SAVE ?
                     <Save canvas={canvas}
                           canvasName={canvasName}
@@ -64,8 +64,8 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, 
                         setCanvas={setCanvas}
                         canvasCursorPos={canvasCursorPos}
                         setCanvasCursorPos={setCanvasCursorPos} />: null}
-            </NavContent>
-        </NavBarContainer>
+            </StyledNavContent>
+        </StyledNavBarContainer>
     );
 }
 

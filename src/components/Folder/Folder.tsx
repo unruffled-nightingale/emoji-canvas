@@ -1,6 +1,6 @@
 import {useState} from "react";
 import File from "./File";
-import {getLocalStorage, saveToLocalStorage} from "./FilesUtils";
+import {getLocalStorage, saveToLocalStorage} from "../SharedUtils/LocalStorageUtils";
 
 type FolderProps = {
     setCanvas: (x: string) => void
