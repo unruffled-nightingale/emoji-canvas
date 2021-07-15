@@ -1,6 +1,6 @@
 import IconSmall from '../SharedStyledComponents/IconSmall'
-import {StyledFileContainer} from './StyledFileContainer'
-import {StyledFileName} from './StyledFileName'
+import {StyledFileContainer} from '../SharedStyledComponents/StyledFileContainer'
+import {StyledFileName} from '../SharedStyledComponents/StyledFileName'
 
 type FileProps = {
     name: string

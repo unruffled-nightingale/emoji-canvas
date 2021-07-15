@@ -6,6 +6,7 @@ import {StyledNavButtons} from "./StyledNavButtons";
 import {StyledNavButton} from "./StyledNavButton";
 import {StyledNavContent} from "./StyledNavContent";
 import {StyledNavBarContainer} from "./StyledNavBarContainer";
+import { Gallery } from "../Gallery/Gallery";
 
 type NavBarProps = {
     canvas: string
@@ -64,6 +65,8 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, 
                         setCanvas={setCanvas}
                         canvasCursorPos={canvasCursorPos}
                         setCanvasCursorPos={setCanvasCursorPos} />: null}
+                {navBarView === NAV_BAR_VIEWS.GALLERY ?
+                    <Gallery setCanvasPreview={setPreviewCanvas}/>: null}
             </StyledNavContent>
         </StyledNavBarContainer>
     );
