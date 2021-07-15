@@ -66,7 +66,7 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, 
                         canvasCursorPos={canvasCursorPos}
                         setCanvasCursorPos={setCanvasCursorPos} />: null}
                 {navBarView === NAV_BAR_VIEWS.GALLERY ?
-                    <Gallery setCanvasPreview={setPreviewCanvas} />: null}
+                    <Gallery setCanvasPreview={setPreviewCanvas}/>: null}
             </StyledNavContent>
         </StyledNavBarContainer>
     );
