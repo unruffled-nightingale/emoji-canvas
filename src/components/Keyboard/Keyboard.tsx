@@ -9,15 +9,15 @@ const UNRENDERABLE_EMOJIS = unrenderableEmojis;
 
 type KeyboardProps = {
     canvas: string
-    canvasCursorPos: number
     setCanvas: (x: string) => void
     setCanvasCursorPos: (x: number) => void
+    getCanvasCursorPos: () => number
 }
 
-const Keyboard = ({canvas, setCanvas, canvasCursorPos, setCanvasCursorPos}: KeyboardProps) => {
+const Keyboard = ({canvas, setCanvas, getCanvasCursorPos, setCanvasCursorPos}: KeyboardProps) => {
 
     const onEmojiClick = (event: MouseEvent, id: string) => {
-        console.log(id)
+        let canvasCursorPos: number = getCanvasCursorPos()
         let emoji = (event.target as HTMLTextAreaElement).innerText
         let newText = canvas.slice(0, canvasCursorPos) + emoji + canvas.slice(canvasCursorPos, canvas.length);
         setCanvas(newText);

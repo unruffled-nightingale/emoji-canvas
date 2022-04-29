@@ -11,10 +11,10 @@ import { Gallery } from "../Gallery/Gallery";
 type NavBarProps = {
     canvas: string
     canvasName: string
-    canvasCursorPos: number
     canvasPreview?: string
     setCanvas: (x: string) => void
     setCanvasName: (x: string) => void
+    getCanvasCursorPos: () => number
     setCanvasCursorPos: (x: number) => void
     setPreviewCanvas: (x: string | undefined) => void
 }
@@ -27,7 +27,7 @@ enum NAV_BAR_VIEWS {
     GALLERY = "GALLERY",
 };
 
-const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, setCanvasCursorPos, setPreviewCanvas}: NavBarProps) => {
+const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, getCanvasCursorPos, setCanvasCursorPos, setPreviewCanvas}: NavBarProps) => {
 
     let [navBarView, setNavBarView] = useState<NAV_BAR_VIEWS>(NAV_BAR_VIEWS.KEYBOARD);
 
@@ -63,7 +63,7 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, 
                     <Keyboard
                         canvas={canvas}
                         setCanvas={setCanvas}
-                        canvasCursorPos={canvasCursorPos}
+                        getCanvasCursorPos={getCanvasCursorPos}
                         setCanvasCursorPos={setCanvasCursorPos} />: null}
                 {navBarView === NAV_BAR_VIEWS.GALLERY ?
                     <Gallery setCanvasPreview={setPreviewCanvas}/>: null}

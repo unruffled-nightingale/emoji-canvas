@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 import NavBar from "./NavBar/NavBar";
 import Canvas from "./Canvas/Canvas";
 
@@ -7,10 +7,21 @@ const BLANK_CANVAS_NAME: string = "";
 
 function App() {
 
+    console.log("App re-rendered")
+
+    let canvasCursorPos = useRef<number>(0);
     let [canvas, setCanvas] = useState<string>(BLANK_CANVAS);
     let [canvasName, setCanvasName] = useState<string>(BLANK_CANVAS_NAME);
-    let [canvasCursorPos, setCanvasCursorPos] = useState<number>(0);
     let [canvasPreview, setCanvasPreview] = useState<string | undefined>(undefined);
+
+    const setCanvasCursorPos = (value: number) => {
+        canvasCursorPos.current = value
+    }
+
+    const getCanvasCursorPos = () => {
+        return canvasCursorPos.current
+    }
+
 
     return (
         <>
@@ -23,7 +34,7 @@ function App() {
                     setCanvas={setCanvas}
                     canvasName={canvasName}
                     setCanvasName={setCanvasName}
-                    canvasCursorPos={canvasCursorPos}
+                    getCanvasCursorPos={getCanvasCursorPos}
                     setCanvasCursorPos={setCanvasCursorPos}
                     setPreviewCanvas={setCanvasPreview}/>
         </>
