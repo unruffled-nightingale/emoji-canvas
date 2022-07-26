@@ -9,26 +9,28 @@ const BLANK_CANVAS_NAME: string = "";
 function App() {
 
     let canvasCursorPos = useRef<number>(0);
-    let canvas = useRef<any>(BLANK_CANVAS);
+    let [canvas, setCanvas] = useState<string>(BLANK_CANVAS);
+    let textAreaRef = useRef<any>(BLANK_CANVAS);
     let [canvasName, setCanvasName] = useState<string>(BLANK_CANVAS_NAME);
     let [canvasPreview, setCanvasPreview] = useState<string | undefined>(undefined);
     let [allFileNames, setAllCanvasNames] = useState(Object.keys(getLocalStorage()))
 
     useEffect(() => {
-        canvas.current.value = BLANK_CANVAS
+        textAreaRef.current.value = canvas
     }, [])
+
+    useEffect(() => {
+        const textAreaText = canvasPreview ? canvasPreview : canvas
+        textAreaRef.current.value = textAreaText
+    }, [canvas, canvasPreview])
 
     const setCanvasCursorPos = (value: number) => {
         canvasCursorPos.current = value
     }
 
-    const setCanvas = (canvasText: string) => {
-        canvas.current.value = canvasText
-    }
-
     const updateCanvas = (character: string) => {
         let cursorPos: number = canvasCursorPos.current
-        let canvasText = canvas.current.value 
+        let canvasText = textAreaRef.current.value 
         let newText = canvasText.slice(0, cursorPos) + character + canvasText.slice(cursorPos, canvasText.length);
         setCanvas(newText);
         setCanvasCursorPos(cursorPos + character.length)
@@ -36,7 +38,7 @@ function App() {
 
     const saveCanvas = () => {
         let data = getLocalStorage();
-        data[canvasName] = canvas.current.value;
+        data[canvasName] = textAreaRef.current.value;
         saveToLocalStorage(data);
         setAllCanvasNames(Object.keys(data))
     }
@@ -63,7 +65,7 @@ function App() {
     return (
         <>
             <Canvas
-                canvas={canvas}
+                canvas={textAreaRef}
                 setCanvasCursorPos={setCanvasCursorPos}/>
             <NavBar 
                 canvasName={canvasName}
