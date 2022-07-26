@@ -8,6 +8,7 @@ type GalleryProps = {
 }
 
 export const Gallery = ({setCanvasPreview}: GalleryProps) => {
+
     return (
         <>
             {EXAMPLES.map(f => <File name={f['filename'].replaceAll("_", " ")}

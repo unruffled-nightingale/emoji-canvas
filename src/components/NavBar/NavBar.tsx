@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, {useState, memo} from "react";
 import Save from "../Save/Save";
 import Folder from "../Folder/Folder";
-import Keyboard from "../Keyboard/Keyboard";
+import MemoKeyboard from "../Keyboard/Keyboard";
 import {StyledNavButtons} from "./StyledNavButtons";
 import {StyledNavButton} from "./StyledNavButton";
 import {StyledNavContent} from "./StyledNavContent";
@@ -9,14 +9,15 @@ import {StyledNavBarContainer} from "./StyledNavBarContainer";
 import { Gallery } from "../Gallery/Gallery";
 
 type NavBarProps = {
-    canvas: string
     canvasName: string
-    canvasPreview?: string
-    setCanvas: (x: string) => void
+    allFileNames: string[]
     setCanvasName: (x: string) => void
-    getCanvasCursorPos: () => number
-    setCanvasCursorPos: (x: number) => void
-    setPreviewCanvas: (x: string | undefined) => void
+    updateCanvas: (x: string) => void
+    saveCanvas: () => void
+    setCanvasPreview: (x: string | undefined) => void
+    openFile: (x: string) => void
+    deleteFile: (x: string) => void
+    previewFile: (x: string) => void
 }
 
 enum NAV_BAR_VIEWS {
@@ -27,8 +28,8 @@ enum NAV_BAR_VIEWS {
     GALLERY = "GALLERY",
 };
 
-const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, getCanvasCursorPos, setCanvasCursorPos, setPreviewCanvas}: NavBarProps) => {
-
+const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanvas, setCanvasPreview, openFile, deleteFile, previewFile}: NavBarProps) => {
+    
     let [navBarView, setNavBarView] = useState<NAV_BAR_VIEWS>(NAV_BAR_VIEWS.KEYBOARD);
 
     const hideNavBar = () => setNavBarView(NAV_BAR_VIEWS.HIDDEN);
@@ -49,27 +50,25 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, getCanvasCursorPo
             </StyledNavButtons>
             <StyledNavContent>
                 {navBarView === NAV_BAR_VIEWS.SAVE ?
-                    <Save canvas={canvas}
+                    <Save setCanvasName={setCanvasName}
                           canvasName={canvasName}
-                          setCanvasName={setCanvasName}
+                          saveCanvas={saveCanvas}
                           hideNavBar={hideNavBar}/> : null}
                 {navBarView === NAV_BAR_VIEWS.OPEN ?
-                    <Folder setCanvas={setCanvas}
-                            setCanvasName={setCanvasName}
-                            setPreviewCanvas={setPreviewCanvas}
+                    <Folder openFile={openFile}
+                            deleteFile={deleteFile}
+                            previewFile={previewFile}
                             hideNavBar={hideNavBar}
+                            setCanvasPreview={setCanvasPreview}
+                            allFileNames={allFileNames}
                     /> : null}
                 {navBarView === NAV_BAR_VIEWS.KEYBOARD ?
-                    <Keyboard
-                        canvas={canvas}
-                        setCanvas={setCanvas}
-                        getCanvasCursorPos={getCanvasCursorPos}
-                        setCanvasCursorPos={setCanvasCursorPos} />: null}
+                    <MemoKeyboard updateCanvas={updateCanvas} />: null}
                 {navBarView === NAV_BAR_VIEWS.GALLERY ?
-                    <Gallery setCanvasPreview={setPreviewCanvas}/>: null}
+                    <Gallery setCanvasPreview={setCanvasPreview}/>: null}
             </StyledNavContent>
         </StyledNavBarContainer>
     );
 }
 
-export default NavBar;
+export default memo(NavBar);
