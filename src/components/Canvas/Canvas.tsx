@@ -2,16 +2,13 @@ import React, { MouseEvent } from 'react';
 import { StyledTextArea } from './StyledTextArea';
 
 type CanvasProps = {
-    canvas: string
-    canvasPreview?: string,
-    setCanvas: (x: string) => void
+    canvas: any
     setCanvasCursorPos: (x: number) => void
 }
 
-const Canvas = ({canvas, setCanvas, setCanvasCursorPos, canvasPreview}: CanvasProps) => {
+const Canvas = ({canvas, setCanvasCursorPos}: CanvasProps) => {
 
     const onCanvasChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setCanvas(event.target.value);
         setCanvasCursorPos(event.target.selectionEnd)
     };
 
@@ -20,10 +17,12 @@ const Canvas = ({canvas, setCanvas, setCanvasCursorPos, canvasPreview}: CanvasPr
     };
 
     return (
-        <StyledTextArea cols={500} rows={200}
-                  value={canvasPreview ? canvasPreview : canvas}
-                  onChange={onCanvasChange}
-                  onClick={onCanvasClick}/>
+        <StyledTextArea 
+         cols={500} 
+         rows={200} 
+         ref={canvas} 
+         onClick={onCanvasClick} 
+         onChange={onCanvasChange}/>
     );
 }
 

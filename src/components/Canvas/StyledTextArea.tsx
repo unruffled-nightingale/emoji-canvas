@@ -3,7 +3,7 @@ import styled from 'styled-components'
 type StyledTextAreaProps = {
     cols: number | undefined
     rows: number | undefined
-    value: string
+    ref: any
     onChange: (x: React.ChangeEvent<HTMLTextAreaElement>) => void,
     onClick: (x: React.MouseEvent<HTMLTextAreaElement>) => void
 }

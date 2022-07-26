@@ -1,4 +1,4 @@
-import {useCallback, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import NavBar from "./NavBar/NavBar";
 import Canvas from "./Canvas/Canvas";
 import {getLocalStorage, saveToLocalStorage} from "./SharedUtils/LocalStorageUtils";
@@ -8,29 +8,37 @@ const BLANK_CANVAS_NAME: string = "";
 
 function App() {
 
-    console.log("App re-rendered")
-
     let canvasCursorPos = useRef<number>(0);
-    let [canvas, setCanvas] = useState<string>(BLANK_CANVAS);
+    let canvas = useRef<any>(BLANK_CANVAS);
     let [canvasName, setCanvasName] = useState<string>(BLANK_CANVAS_NAME);
     let [canvasPreview, setCanvasPreview] = useState<string | undefined>(undefined);
     let [allFileNames, setAllCanvasNames] = useState(Object.keys(getLocalStorage()))
+
+    useEffect(() => {
+        canvas.current.value = BLANK_CANVAS
+    }, [])
 
     const setCanvasCursorPos = (value: number) => {
         canvasCursorPos.current = value
     }
 
+    const setCanvas = (canvasText: string) => {
+        canvas.current.value = canvasText
+    }
+
     const updateCanvas = (character: string) => {
         let cursorPos: number = canvasCursorPos.current
-        let newText = canvas.slice(0, cursorPos) + character + canvas.slice(cursorPos, canvas.length);
+        let canvasText = canvas.current.value 
+        let newText = canvasText.slice(0, cursorPos) + character + canvasText.slice(cursorPos, canvasText.length);
         setCanvas(newText);
         setCanvasCursorPos(cursorPos + character.length)
     };
 
     const saveCanvas = () => {
         let data = getLocalStorage();
-        data[canvasName] = canvas;
+        data[canvasName] = canvas.current.value;
         saveToLocalStorage(data);
+        setAllCanvasNames(Object.keys(data))
     }
 
     const openFile = (name: string) => {
@@ -49,34 +57,23 @@ function App() {
 
     const previewFile = (name: string) => {
         let data = getLocalStorage();
-        setCanvasPreview(data[name])
+        setCanvas(data[name])
     }
-
-    const memoizedSaveCanvas = useCallback(saveCanvas, [])
-    const memoizedSetCanvasName = useCallback(setCanvasName, [])
-
-    const memoizedOpenFile = useCallback(openFile, [])
-    const memoizedDeleteFile = useCallback(deleteFile, [])
-    const memoizedPreviewFile = useCallback(previewFile, [])
-
-    const memoizedUpdateCanvas = useCallback(updateCanvas, [])
 
     return (
         <>
             <Canvas
                 canvas={canvas}
-                canvasPreview={canvasPreview}
-                setCanvas={setCanvas}
                 setCanvasCursorPos={setCanvasCursorPos}/>
             <NavBar 
                 canvasName={canvasName}
-                setCanvasName={memoizedSetCanvasName}
+                setCanvasName={setCanvasName}
                 setCanvasPreview={setCanvasPreview}
-                updateCanvas={memoizedUpdateCanvas}
-                saveCanvas={memoizedSaveCanvas}
-                openFile={memoizedOpenFile}
-                deleteFile={memoizedDeleteFile}
-                previewFile={memoizedPreviewFile}
+                updateCanvas={updateCanvas}
+                saveCanvas={saveCanvas}
+                openFile={openFile}
+                deleteFile={deleteFile}
+                previewFile={previewFile}
                 allFileNames={allFileNames}
             />
         </>

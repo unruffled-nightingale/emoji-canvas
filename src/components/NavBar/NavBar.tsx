@@ -63,7 +63,7 @@ const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanv
                             allFileNames={allFileNames}
                     /> : null}
                 {navBarView === NAV_BAR_VIEWS.KEYBOARD ?
-                    <MemoKeyboard updateCanvas={updateCanvas} />: null}
+                    <MemoKeyboard onEmojiClick={updateCanvas} />: null}
                 {navBarView === NAV_BAR_VIEWS.GALLERY ?
                     <Gallery setCanvasPreview={setCanvasPreview}/>: null}
             </StyledNavContent>

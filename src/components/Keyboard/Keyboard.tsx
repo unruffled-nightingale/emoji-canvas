@@ -8,14 +8,14 @@ const EMOJI_DATA = emojiData;
 const UNRENDERABLE_EMOJIS = unrenderableEmojis;
 
 type KeyboardProps = {
-    updateCanvas: (x: string) => void
+    onEmojiClick: (x: string) => void
 }
 
-const Keyboard = ({updateCanvas}: KeyboardProps) => {
-    console.log("Keyboard render" )
-    const onEmojiClick = (event: MouseEvent, id: string) => {
+const Keyboard = ({onEmojiClick}: KeyboardProps) => {
+
+    const _onEmojiClick = (event: MouseEvent, id: string) => {
         let emoji = (event.target as HTMLTextAreaElement).innerText
-        updateCanvas(emoji);
+        onEmojiClick(emoji);
     };
 
     return (
@@ -23,7 +23,7 @@ const Keyboard = ({updateCanvas}: KeyboardProps) => {
             {EMOJI_DATA
                 .filter((x: any) => !UNRENDERABLE_EMOJIS.includes(x.annotation))
                 .sort((x: any, y: any) => !('order' in x) ? 2 : x.order > y.order ? 1 : -1) 
-                .map(e => <StyledKeyboardKey key={e['annotation']} onClick={(ev: any) => onEmojiClick(ev, e['annotation'])}>{e['unicode']}</StyledKeyboardKey>)}
+                .map(e => <StyledKeyboardKey key={e['annotation']} onClick={(ev: any) => _onEmojiClick(ev, e['annotation'])}>{e['unicode']}</StyledKeyboardKey>)}
         </StyledKeyboardContainer>
     );
 }
