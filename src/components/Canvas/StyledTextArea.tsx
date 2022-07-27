@@ -10,8 +10,8 @@ type StyledTextAreaProps = {
 
 export const StyledTextArea = styled.textarea<StyledTextAreaProps>`
     font-family: "Helvetica Neue", sans-serif;
-    font-size: 16px;
-    line-height: 17px;
+    font-size: 20px;
+    line-height: 20px;
     border:none;
     cursor: text;
     &:focus {outline: none};

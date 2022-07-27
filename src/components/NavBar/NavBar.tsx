@@ -7,12 +7,14 @@ import {StyledNavButton} from "./StyledNavButton";
 import {StyledNavContent} from "./StyledNavContent";
 import {StyledNavBarContainer} from "./StyledNavBarContainer";
 import { Gallery } from "../Gallery/Gallery";
+import Picker from 'emoji-picker-react';
 
 type NavBarProps = {
     canvasName: string
     allFileNames: string[]
     setCanvasName: (x: string) => void
     updateCanvas: (x: string) => void
+    setCanvas: (x: string) => void
     saveCanvas: () => void
     setCanvasPreview: (x: string | undefined) => void
     openFile: (x: string) => void
@@ -28,7 +30,7 @@ enum NAV_BAR_VIEWS {
     GALLERY = "GALLERY",
 };
 
-const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanvas, setCanvasPreview, openFile, deleteFile, previewFile}: NavBarProps) => {
+const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanvas,setCanvas, setCanvasPreview, openFile, deleteFile, previewFile}: NavBarProps) => {
     
     let [navBarView, setNavBarView] = useState<NAV_BAR_VIEWS>(NAV_BAR_VIEWS.KEYBOARD);
 
@@ -40,6 +42,11 @@ const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanv
         id === navBarView ? hideNavBar() : setNavBarView(NAV_BAR_VIEWS[id  as keyof typeof NAV_BAR_VIEWS]);
     }
 
+    const onEmojiClick = (event: any, emojiObject: any) => {
+        console.log(emojiObject.emoji)
+        updateCanvas(emojiObject.emoji);
+    };
+
     return (
         <StyledNavBarContainer>
             <StyledNavButtons>
@@ -49,6 +56,8 @@ const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanv
                 <StyledNavButton id={NAV_BAR_VIEWS.GALLERY} selected={navBarView === NAV_BAR_VIEWS.GALLERY} onClick={onNavButtonClick}>photo_library</StyledNavButton>
             </StyledNavButtons>
             <StyledNavContent>
+                {navBarView === NAV_BAR_VIEWS.GALLERY ?
+                    <Gallery setCanvas={setCanvas} setCanvasPreview={setCanvasPreview}/>: null}
                 {navBarView === NAV_BAR_VIEWS.SAVE ?
                     <Save setCanvasName={setCanvasName}
                           canvasName={canvasName}
@@ -62,10 +71,7 @@ const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanv
                             setCanvasPreview={setCanvasPreview}
                             allFileNames={allFileNames}
                     /> : null}
-                {navBarView === NAV_BAR_VIEWS.KEYBOARD ?
-                    <MemoKeyboard onEmojiClick={updateCanvas} />: null}
-                {navBarView === NAV_BAR_VIEWS.GALLERY ?
-                    <Gallery setCanvasPreview={setCanvasPreview}/>: null}
+                <Picker onEmojiClick={onEmojiClick} preload={true} pickerStyle={{width: '100%', height: '100%', border: 'none', fontSize: '14px', opacity: navBarView === NAV_BAR_VIEWS.KEYBOARD ? "100%": "0%" }} disableSearchBar={true}/>
             </StyledNavContent>
         </StyledNavBarContainer>
     );

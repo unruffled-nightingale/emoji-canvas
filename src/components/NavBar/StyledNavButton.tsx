@@ -8,7 +8,8 @@ type StyledNavButtonProps = {
 export const StyledNavButton = styled(Icon)<StyledNavButtonProps>`
     && {
         float: right;
-        font-size: 20px;
+        font-size: 24px;
+        padding-right: 12px;
         cursor: pointer;
         color: ${props => props.selected ? "black" : "lightgrey"}
     }

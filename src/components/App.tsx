@@ -72,6 +72,7 @@ function App() {
                 setCanvasName={setCanvasName}
                 setCanvasPreview={setCanvasPreview}
                 updateCanvas={updateCanvas}
+                setCanvas={setCanvas}
                 saveCanvas={saveCanvas}
                 openFile={openFile}
                 deleteFile={deleteFile}

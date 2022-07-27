@@ -23,7 +23,7 @@ const Keyboard = ({onEmojiClick}: KeyboardProps) => {
             {EMOJI_DATA
                 .filter((x: any) => !UNRENDERABLE_EMOJIS.includes(x.annotation))
                 .sort((x: any, y: any) => !('order' in x) ? 2 : x.order > y.order ? 1 : -1) 
-                .map(e => <StyledKeyboardKey key={e['annotation']} onClick={(ev: any) => _onEmojiClick(ev, e['annotation'])}>{e['unicode']}</StyledKeyboardKey>)}
+                .map(e => <StyledKeyboardKey role="img" key={e['annotation']} onClick={(ev: any) => _onEmojiClick(ev, e['annotation'])}>{e['unicode']}</StyledKeyboardKey>)}
         </StyledKeyboardContainer>
     );
 }
