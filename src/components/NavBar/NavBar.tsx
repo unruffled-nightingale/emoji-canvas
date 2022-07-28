@@ -1,7 +1,6 @@
 import React, {useState, memo} from "react";
 import Save from "../Save/Save";
 import Folder from "../Folder/Folder";
-import MemoKeyboard from "../Keyboard/Keyboard";
 import {StyledNavButtons} from "./StyledNavButtons";
 import {StyledNavButton} from "./StyledNavButton";
 import {StyledNavContent} from "./StyledNavContent";
@@ -71,7 +70,7 @@ const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanv
                             setCanvasPreview={setCanvasPreview}
                             allFileNames={allFileNames}
                     /> : null}
-                <Picker onEmojiClick={onEmojiClick} preload={true} pickerStyle={{width: '100%', height: '100%', border: 'none', fontSize: '14px', opacity: navBarView === NAV_BAR_VIEWS.KEYBOARD ? "100%": "0%" }} disableSearchBar={true}/>
+                <Picker onEmojiClick={onEmojiClick} preload={true} pickerStyle={{width: '100%', height: '100%', border: 'none', fontSize: '14px', opacity: navBarView === NAV_BAR_VIEWS.KEYBOARD ? "100%": "0%" }}/>
             </StyledNavContent>
         </StyledNavBarContainer>
     );

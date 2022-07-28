@@ -3,7 +3,9 @@ import NavBar from "./NavBar/NavBar";
 import Canvas from "./Canvas/Canvas";
 import {getLocalStorage, saveToLocalStorage} from "./SharedUtils/LocalStorageUtils";
 
-const BLANK_CANVAS: string = (" ".repeat(1000) + "\n").repeat(50);
+export const CANVAS_ROWS = 50
+export const CANVAS_COLUMNS = 200 
+const BLANK_CANVAS: string = (" ".repeat(CANVAS_COLUMNS) + "\n").repeat(CANVAS_ROWS);
 const BLANK_CANVAS_NAME: string = "";
 
 function App() {
