@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, KeyboardEvent } from 'react';
 import { CANVAS_ROWS, CANVAS_COLUMNS } from '../App';
 import { StyledTextArea } from './StyledTextArea';
 type CanvasProps = {
@@ -16,6 +16,14 @@ const Canvas = ({canvas, setCanvasCursorPos}: CanvasProps) => {
         event.target.selectionEnd = cursorPos
     };
 
+    const onCanvasClick = (event: MouseEvent<HTMLTextAreaElement>) => {
+        setCanvasCursorPos((event.target as HTMLTextAreaElement).selectionEnd);
+    };
+
+    const onCanvasKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        setCanvasCursorPos((event.target as HTMLTextAreaElement).selectionEnd);
+    }
+
     const cleanCanvas = (canvasText: string) => {
         const cleanCanvas = canvasText.split("\n")
             .map(e => e.padEnd(CANVAS_COLUMNS))
@@ -25,17 +33,14 @@ const Canvas = ({canvas, setCanvasCursorPos}: CanvasProps) => {
         return cleanCanvas
     };
 
-    const onCanvasClick = (event: MouseEvent<HTMLTextAreaElement>) => {
-        setCanvasCursorPos((event.target as HTMLTextAreaElement).selectionEnd);
-    };
-
     return (
         <StyledTextArea 
          cols={CANVAS_COLUMNS} 
          rows={CANVAS_ROWS} 
          ref={canvas} 
          onClick={onCanvasClick} 
-         onChange={onCanvasChange}/>
+         onChange={onCanvasChange}
+         onKeyDown={onCanvasKeyDown}/>
     );
 }
 
