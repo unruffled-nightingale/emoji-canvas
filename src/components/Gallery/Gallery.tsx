@@ -1,4 +1,4 @@
-import examples from '../../resources/data/examples.json'
+import examples from '../../resources/examples.json'
 import File from './File'
 
 const EXAMPLES = examples;
