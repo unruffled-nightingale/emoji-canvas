@@ -3,36 +3,29 @@ import File from "./File";
 import {getLocalStorage, saveToLocalStorage} from "../SharedUtils/LocalStorageUtils";
 
 type FolderProps = {
-    setCanvas: (x: string) => void
-    setCanvasName: (x: string) => void
-    setPreviewCanvas: (x: string | undefined) => void
+    allFileNames: string[]
+    openFile: (x: string) => void
+    deleteFile: (x: string) => void
+    previewFile: (x: string) => void
     hideNavBar: () => void
+    setCanvasPreview: (x: string | undefined) => void
 }
-const Folder = ({setCanvas, setCanvasName, setPreviewCanvas, hideNavBar}: FolderProps) => {
-
-    const [allFileNames, setAllCanvasNames] = useState(Object.keys(getLocalStorage()))
+const Folder = ({openFile, deleteFile, previewFile, hideNavBar, allFileNames, setCanvasPreview}: FolderProps) => {
 
     const onFileOpen = (name: string) => {
-        let data = getLocalStorage();
-        setCanvas(data[name]);
-        setCanvasName(name);
-        setPreviewCanvas(undefined)
+        openFile(name)
         hideNavBar();
     }
 
     const onFileDelete = (name: string) => {
-        let data = getLocalStorage();
-        delete data[name];
-        saveToLocalStorage(data);
-        setAllCanvasNames(Object.keys(data))
+        deleteFile(name)
     }
 
     const onFileMouseOver = (name: string) => {
-        let data = getLocalStorage();
-        setPreviewCanvas(data[name])
+        previewFile(name);
     }
 
-    const onFileMouseOut = () => setPreviewCanvas(undefined)
+    const onFileMouseOut = () => setCanvasPreview(undefined)
 
     return (
         <>

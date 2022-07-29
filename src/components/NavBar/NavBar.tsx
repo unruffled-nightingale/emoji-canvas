@@ -1,22 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, memo} from "react";
 import Save from "../Save/Save";
 import Folder from "../Folder/Folder";
-import Keyboard from "../Keyboard/Keyboard";
 import {StyledNavButtons} from "./StyledNavButtons";
 import {StyledNavButton} from "./StyledNavButton";
 import {StyledNavContent} from "./StyledNavContent";
 import {StyledNavBarContainer} from "./StyledNavBarContainer";
 import { Gallery } from "../Gallery/Gallery";
+import Picker from 'emoji-picker-react';
 
 type NavBarProps = {
-    canvas: string
     canvasName: string
-    canvasCursorPos: number
-    canvasPreview?: string
-    setCanvas: (x: string) => void
+    allFileNames: string[]
     setCanvasName: (x: string) => void
-    setCanvasCursorPos: (x: number) => void
-    setPreviewCanvas: (x: string | undefined) => void
+    updateCanvas: (x: string) => void
+    setCanvas: (x: string) => void
+    saveCanvas: () => void
+    setCanvasPreview: (x: string | undefined) => void
+    openFile: (x: string) => void
+    deleteFile: (x: string) => void
+    previewFile: (x: string) => void
 }
 
 enum NAV_BAR_VIEWS {
@@ -27,8 +29,8 @@ enum NAV_BAR_VIEWS {
     GALLERY = "GALLERY",
 };
 
-const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, setCanvasCursorPos, setPreviewCanvas}: NavBarProps) => {
-
+const NavBar = ({allFileNames, canvasName, setCanvasName, updateCanvas, saveCanvas,setCanvas, setCanvasPreview, openFile, deleteFile, previewFile}: NavBarProps) => {
+    
     let [navBarView, setNavBarView] = useState<NAV_BAR_VIEWS>(NAV_BAR_VIEWS.KEYBOARD);
 
     const hideNavBar = () => setNavBarView(NAV_BAR_VIEWS.HIDDEN);
@@ -39,6 +41,11 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, 
         id === navBarView ? hideNavBar() : setNavBarView(NAV_BAR_VIEWS[id  as keyof typeof NAV_BAR_VIEWS]);
     }
 
+    const onEmojiClick = (event: any, emojiObject: any) => {
+        console.log(emojiObject.emoji)
+        updateCanvas(emojiObject.emoji);
+    };
+
     return (
         <StyledNavBarContainer>
             <StyledNavButtons>
@@ -48,28 +55,25 @@ const NavBar = ({canvas, setCanvas, canvasName, setCanvasName, canvasCursorPos, 
                 <StyledNavButton id={NAV_BAR_VIEWS.GALLERY} selected={navBarView === NAV_BAR_VIEWS.GALLERY} onClick={onNavButtonClick}>photo_library</StyledNavButton>
             </StyledNavButtons>
             <StyledNavContent>
+                {navBarView === NAV_BAR_VIEWS.GALLERY ?
+                    <Gallery setCanvas={setCanvas} setCanvasPreview={setCanvasPreview}/>: null}
                 {navBarView === NAV_BAR_VIEWS.SAVE ?
-                    <Save canvas={canvas}
+                    <Save setCanvasName={setCanvasName}
                           canvasName={canvasName}
-                          setCanvasName={setCanvasName}
+                          saveCanvas={saveCanvas}
                           hideNavBar={hideNavBar}/> : null}
                 {navBarView === NAV_BAR_VIEWS.OPEN ?
-                    <Folder setCanvas={setCanvas}
-                            setCanvasName={setCanvasName}
-                            setPreviewCanvas={setPreviewCanvas}
+                    <Folder openFile={openFile}
+                            deleteFile={deleteFile}
+                            previewFile={previewFile}
                             hideNavBar={hideNavBar}
+                            setCanvasPreview={setCanvasPreview}
+                            allFileNames={allFileNames}
                     /> : null}
-                {navBarView === NAV_BAR_VIEWS.KEYBOARD ?
-                    <Keyboard
-                        canvas={canvas}
-                        setCanvas={setCanvas}
-                        canvasCursorPos={canvasCursorPos}
-                        setCanvasCursorPos={setCanvasCursorPos} />: null}
-                {navBarView === NAV_BAR_VIEWS.GALLERY ?
-                    <Gallery setCanvasPreview={setPreviewCanvas}/>: null}
+                <Picker onEmojiClick={onEmojiClick} preload={true} pickerStyle={{width: '100%', height: '100%', border: 'none', fontSize: '14px', opacity: navBarView === NAV_BAR_VIEWS.KEYBOARD ? "100%": "0%" }}/>
             </StyledNavContent>
         </StyledNavBarContainer>
     );
 }
 
-export default NavBar;
+export default memo(NavBar);

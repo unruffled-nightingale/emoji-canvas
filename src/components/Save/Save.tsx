@@ -5,21 +5,19 @@ import {StyledFileNameInput} from "./StyledFileNameInput"
 import {StyledSaveContainer} from "./StyledSaveContainer"
 import {StyledWarningText} from "./StyledWarningText"
 
-type SaveProps = {
-    canvas: string
+type SaveProps = {   
     canvasName: string
     setCanvasName: (x: string) => void
+    saveCanvas: () => void
     hideNavBar: () => void
 }
 
-const Save = ({canvas, canvasName, setCanvasName,  hideNavBar}: SaveProps) => {
+const Save = ({canvasName, setCanvasName, saveCanvas,  hideNavBar}: SaveProps) => {
 
     const onInputChange = (event: FormEvent<HTMLInputElement>) => setCanvasName((event.target as HTMLInputElement).value)
 
     const onSave = () => {
-        let data = getLocalStorage();
-        data[canvasName] = canvas;
-        saveToLocalStorage(data);
+        saveCanvas()
         hideNavBar()
     }
 
