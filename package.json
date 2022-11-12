@@ -22,10 +22,10 @@
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.3",
     "react-emoji-render": "^1.2.4",
-    "react-scripts": "4.0.3",
-    "styled-components": "^5.3.0",
+    "react-scripts": "5.0.0",
+    "styled-components": "^5",
     "typescript": "^4.3.4",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,7 +37,7 @@
     "docker:tag": "yarn run docker:build; dotenv cross-var docker tag emoji-art %DOCKER_REGISTRY%/emoji-art:latest",
     "docker:push": "yarn run docker:tag; dotenv cross-var docker push %DOCKER_REGISTRY%/emoji-art:latest",
     "kube:apply": "yarn run docker:push; kubectl apply -f ./kube/deployment.yaml",
-    "kube:redeploy": "yarn run docker:push; kubectl rollout restart deploy emoji-art",
+    "kube:redeploy": "yarn run docker:push; kubectl rollout restart deploy emojiart",
     "data:build": "node scripts/build-examples-data.js"
   },
   "eslintConfig": {
