@@ -13,6 +13,8 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "@types/styled-components": "^5.1.10",
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^6.0.0",
     "emoji-picker-react": "^3.5.1",
     "emojibase-data": "^6.2.0",
     "font-awesome": "^4.7.0",
@@ -29,7 +31,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker build -t emoji-art .",
+    "docker:run": "yarn run docker:build; docker run -p 3002:80 -d emoji-art",
+    "docker:tag": "yarn run docker:build; dotenv cross-var docker tag emoji-art %DOCKER_REGISTRY%/emoji-art:latest",
+    "docker:push": "yarn run docker:tag; dotenv cross-var docker push %DOCKER_REGISTRY%/emoji-art:latest",
+    "kube:apply": "yarn run docker:push; kubectl apply -f ./kube/deployment.yaml",
+    "kube:redeploy": "yarn run docker:push; kubectl rollout restart deploy emoji-art",
+    "data:build": "node scripts/build-examples-data.js"
   },
   "eslintConfig": {
     "extends": [
