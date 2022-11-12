@@ -68,7 +68,6 @@ Redeploys the application on kubernetes.
 
 You must must have `kubectl` configured for this command to work.
 
-
 ### `yarn data:build`
 
 Constructs `./src/resources/examples.json` used in the application from the art stored in `/resources/example_art`
