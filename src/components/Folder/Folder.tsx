@@ -1,6 +1,4 @@
-import {useState} from "react";
 import File from "./File";
-import {getLocalStorage, saveToLocalStorage} from "../SharedUtils/LocalStorageUtils";
 
 type FolderProps = {
     allFileNames: string[]

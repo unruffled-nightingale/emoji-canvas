@@ -1,6 +1,5 @@
 import IconSmall from '../SharedStyledComponents/IconSmall'
 import {FormEvent} from 'react';
-import {getLocalStorage, saveToLocalStorage} from "../SharedUtils/LocalStorageUtils";
 import {StyledFileNameInput} from "./StyledFileNameInput"
 import {StyledSaveContainer} from "./StyledSaveContainer"
 import {StyledWarningText} from "./StyledWarningText"

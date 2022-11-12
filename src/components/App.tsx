@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import NavBar from "./NavBar/NavBar";
 import Canvas from "./Canvas/Canvas";
 import {getLocalStorage, saveToLocalStorage} from "./SharedUtils/LocalStorageUtils";
@@ -19,7 +19,7 @@ function App() {
 
     useEffect(() => {
         textAreaRef.current.value = canvas
-    }, [])
+    }, [canvas])
 
     useEffect(() => {
         const textAreaText = canvasPreview ? canvasPreview : canvas
