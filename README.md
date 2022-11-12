@@ -50,7 +50,7 @@ Builds and runs the production app in background mode.
 
 Open [http://localhost:3002](http://localhost:3002) to view it in the browser.
 
-### `yarn push-docker`
+### `yarn docker:push`
 
 Builds and publishes the production app to the docker registry defined by the environment variable `DOCKER_REGISTRY` or defined in an `.env` file in the root project directory.
 
